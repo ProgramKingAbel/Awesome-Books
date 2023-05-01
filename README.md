@@ -2,7 +2,7 @@
 
 <div align="center">  
 
-  <h3><b>Abel Morara Portfolio </b></h3>
+  <h3><b>Awesome Books</b></h3>
 
 </div>
 
@@ -21,10 +21,10 @@
 
 
 
-# 📖 [Abel-Morara-Portfolio] <a name="about-project"></a>
+# 📖 [Awesome Books] <a name="about-project"></a>
 
 
-**Abel Morara Portfolio** is a responsive web portfolio application where a developer can keep record of their previous projects, accoplishments, skills, contacts and CV to make it easier for them to display and present their developer talents.
+**Abel Morara Portfolio** is a basic website that allows users to add/remove books from a list.
 
 ## 🛠 Built With <a name="built-with"></a>
 
