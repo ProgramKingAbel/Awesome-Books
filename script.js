@@ -2,13 +2,38 @@ const books = localStorage.getItem('book') ? JSON.parse(localStorage.getItem('bo
 
 console.log(books);
 
+const addBook = (e) => {
+    e.preventDefault();
 
-// ADD CODE HERE -------------------------------------------------------------
+    let book = {
+        id: Date.now(),
+        title: document.getElementById('title').value,
+        author: document.getElementById('author').value,
+    }
+    if (book.id && book.title && book.author) {
+        books.push(book);
+    }
+    document.querySelector('form').reset();
 
+    localStorage.setItem('book', JSON.stringify(books));
+    location.reload();
+}
 
+books.forEach((element, e) => {
+    const allBooks = document.querySelector('.all-books');
+    const book = document.createElement('div');
+    book.classList = 'book';
 
-
-//ADD CODE HERE -------------------------------------------------------------
+    book.innerHTML = `
+    
+    <h2 class="title">${books[e].title}</h2>
+    <p class="author">${books[e].author}</p>
+    <button class="remove">Remove</button>
+    <hr />
+    `;
+    allBooks.append(book);
+    
+});
 
 function activateDelete() {
     let remove = document.querySelectorAll('.remove');
