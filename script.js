@@ -58,5 +58,45 @@ class Store {
   }
 }
 
-// --------------------------------a--------------d--------------d-------------------------
+//Event to display books
+document.addEventListener('DOMContentLoaded', library.showBooks);
+//Event to add a book
+document.querySelector('#add-book').addEventListener('submit', (e) => {
+  //prevent Default
+  e.preventDefault();
+
+  //get values
+
+   const id= Date.now();
+   const title=document.getElementById('title').value;
+   const author = document.getElementById('author').value;
+  
+  if (id && title && author) {
+    //create an instance of class book
+
+    const book = new Book(id, title, author);
+    library.addBook(book);
+
+    //add book to store
+    Store.addBook(book);
+    library.clearInput();
+  }
+    
+})
+
+//Event to call a function to remove a book
+function activateDelete() {
+  const remove = document.querySelectorAll('.remove');
+ 
+  remove.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      Store.removeBook(i);
+
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  activateDelete();
+});
 
