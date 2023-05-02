@@ -1,53 +1,100 @@
-const books = localStorage.getItem('book') ? JSON.parse(localStorage.getItem('book')) : [];
-
-const addBook = (e) => {
-  e.preventDefault();
-
-  const book = {
-    id: Date.now(),
-    title: document.getElementById('title').value,
-    author: document.getElementById('author').value,
-  };
-  if (book.id && book.title && book.author) {
-    books.push(book);
+/* eslint-disable max-classes-per-file */
+// Book class to represent a book
+class Book {
+  constructor(id, title, author) {
+    this.id = id;
+    this.title = title;
+    this.author = author;
   }
-  document.querySelector('form').reset();
-
-  localStorage.setItem('book', JSON.stringify(books));
-  document.location.reload();
-};
-
-books.forEach((element, e) => {
-  const allBooks = document.querySelector('.all-books');
-  const book = document.createElement('div');
-  book.classList = 'book';
-
-  book.innerHTML = `
-    
-    <h2 class="title">${books[e].title}</h2>
-    <p class="author">Author: <span></span>${books[e].author}</p>
-    <button class="remove">Remove</button>
-    <hr />
-    `;
-  allBooks.append(book);
-});
-
-// filter function
-
-function deleteBook(i) {
-  books.splice(i, 1);
-  localStorage.setItem('book', JSON.stringify(books));
-  document.location.reload();
 }
 
+// Store class to handle local storage
+class Store {
+  static getBooks() {
+    const books = localStorage.getItem('books') ? JSON.parse(localStorage.getItem('books')) : [];
+    return books;
+  }
+
+  static addBook(book) {
+    const books = Store.getBooks();
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+    document.location.reload();
+  }
+
+  static removeBook(i) {
+    const books = Store.getBooks();
+    books.splice(i, 1);
+    localStorage.setItem('books', JSON.stringify(books));
+    document.location.reload();
+  }
+}
+
+// Design Frontend of our library
+
+class library {
+  static showBooks() {
+    const books = Store.getBooks();
+
+    books.forEach((book) => library.addBook(book));
+  }
+
+  static addBook(book) {
+    const allBooks = document.querySelector('.all-books');
+    const newBook = document.createElement('div');
+    newBook.classList = 'book';
+
+    newBook.innerHTML = `
+      
+      <p class="title">"${book.title}" by <span></span>${book.author}</p>
+      <button class="remove">Remove</button>
+    
+      `;
+
+    allBooks.append(newBook);
+  }
+
+  static clearInput() {
+    document.querySelector('form').reset();
+  }
+}
+
+// Event to display books
+document.addEventListener('DOMContentLoaded', library.showBooks);
+// Event to add a book
+document.querySelector('#add-book').addEventListener('submit', (e) => {
+  // prevent Default
+  e.preventDefault();
+
+  // get values
+
+  const id = Date.now();
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+
+  if (id && title && author) {
+    // create an instance of class book
+
+    const book = new Book(id, title, author);
+    library.addBook(book);
+
+    // add book to store
+    Store.addBook(book);
+    library.clearInput();
+  }
+});
+
+// Event to call a function to remove a book
 function activateDelete() {
   const remove = document.querySelectorAll('.remove');
+
   remove.forEach((btn, i) => {
-    btn.addEventListener('click', () => { deleteBook(i); });
+    btn.addEventListener('click', () => {
+      Store.removeBook(i);
+    });
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('submit').addEventListener('click', addBook);
   activateDelete();
 });
