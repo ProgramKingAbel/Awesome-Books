@@ -99,8 +99,7 @@ class Store {
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
     // window.alert('record added');
-    //used for demonstration purpose
-
+    // used for demonstration purpose
   }
 
   static removeBook(i) {
