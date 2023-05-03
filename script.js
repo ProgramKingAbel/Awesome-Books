@@ -57,7 +57,30 @@ function currentDate() {
   }
 }
 currentDate();
+//navigation to display specific sections of the page
+function disappear() {
+  const links = document.querySelectorAll('.menu-link');
+  links.forEach((lk, i) => {
+    lk.addEventListener('click', () => {
+      goToSection(i);
+    });
+  })
+}
 
+function goToSection(i) {
+  const contents = document.getElementsByTagName('section');
+  for (var x = 0; x < contents.length; x++) {
+    if (i !== x) {
+      // console.log(contents[x]);
+       contents[x].classList.add('active');
+    }
+    else {
+      contents[x].classList.remove('active');
+    }
+ 
+  }
+  
+}
 
 
 // Book class to represent a book
