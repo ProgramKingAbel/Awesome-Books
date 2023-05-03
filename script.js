@@ -98,7 +98,9 @@ class Store {
     const books = Store.getBooks();
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
-    window.alert('record added'); //used for demonstration purpose
+    // window.alert('record added');
+    //used for demonstration purpose
+
   }
 
   static removeBook(i) {
