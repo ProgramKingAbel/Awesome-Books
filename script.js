@@ -1,4 +1,83 @@
 /* eslint-disable max-classes-per-file */
+
+// Time code
+const currentTime = document.querySelector('.current-time');
+
+function showTime() {
+  const time = new Date();
+  currentTime.innerHTML = time.toLocaleTimeString('en-US', { hour12: true });
+  setTimeout(showTime, 1000);
+}
+showTime();
+
+// Date Code
+
+function currentDate() {
+  const now = new Date();
+
+  // return integer
+  const dayName = now.getDay();
+  const dayNum = now.getDate();
+  const month = now.getMonth();
+  const year = now.getFullYear();
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const weekDay = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+
+  // collect ids of date
+  const collect = ['day', 'daynum', 'month', 'year'];
+
+  // return value array with number as a index
+  const val = [weekDay[dayName], dayNum, months[month], year];
+
+  for (let i = 0; i < collect.length; i += 1) {
+    document.getElementById(collect[i]).firstChild.nodeValue = val[i];
+  }
+}
+currentDate();
+
+function goToSection(i) {
+  const contents = document.getElementsByTagName('section');
+  for (let x = 0; x < contents.length; x += 1) {
+    if (i !== x) {
+      contents[x].classList.add('active');
+    } else {
+      contents[x].classList.remove('active');
+    }
+  }
+}
+
+// navigation to display specific sections of the page
+function disappear() {
+  const links = document.querySelectorAll('.menu-link');
+  links.forEach((lk, i) => {
+    lk.addEventListener('click', () => {
+      goToSection(i);
+    });
+  });
+}
+
 // Book class to represent a book
 class Book {
   constructor(id, title, author) {
@@ -19,7 +98,6 @@ class Store {
     const books = Store.getBooks();
     books.push(book);
     localStorage.setItem('books', JSON.stringify(books));
-    document.location.reload();
   }
 
   static removeBook(i) {
@@ -97,4 +175,5 @@ function activateDelete() {
 
 document.addEventListener('DOMContentLoaded', () => {
   activateDelete();
+  disappear();
 });
